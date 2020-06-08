@@ -11,6 +11,7 @@ import com.company.contact.model.Contact;
 import org.springframework.dao.DataAccessException;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.jdbc.core.ResultSetExtractor;
+import org.springframework.jdbc.core.RowMapper;
 
 public class ContactDAOImpl implements ContactDAO {
 	
@@ -65,8 +66,22 @@ public class ContactDAOImpl implements ContactDAO {
 
 	@Override
 	public List<Contact> getAllContacts() {
-		// TODO Auto-generated method stub
-		return null;
+		String getAll = "SELECT * FROM crud_app.contact";
+		
+		RowMapper<Contact> rowMapper = new RowMapper<Contact>() {
+			@Override
+			public Contact mapRow(ResultSet rs, int rowNum) throws SQLException {
+				Integer id = rs.getInt("contact_id");
+				String name = rs.getString("name");
+				String email = rs.getString("email");
+				String address = rs.getString("address");
+				String phone = rs.getString("phone");
+				
+				return new Contact(id, name, email, address, phone);
+			}
+			
+		};
+		return jdbcTemplate.query(getAll, rowMapper);
 	}
 
 }

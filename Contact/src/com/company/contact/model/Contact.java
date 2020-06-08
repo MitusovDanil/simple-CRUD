@@ -6,6 +6,10 @@ public class Contact {
 	private String email;
 	private String address;
 	private String phone;
+
+	public Contact() {
+		// TODO Auto-generated constructor stub
+	}
 	
 	public Contact(Integer id, String name, String email, String address, String phone) {
 		this(name, email,address,phone);
@@ -19,6 +23,8 @@ public class Contact {
 		this.address = address;
 		this.phone = phone;
 	}
+
+	
 
 	public Integer getId() {
 		return id;
