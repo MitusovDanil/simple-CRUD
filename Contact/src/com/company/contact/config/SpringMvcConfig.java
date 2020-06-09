@@ -18,7 +18,7 @@ import com.company.contact.dao.ContactDAOImpl;
 @EnableWebMvc
 @ComponentScan(basePackages = "com.company.contact")
 public class SpringMvcConfig implements WebMvcConfigurer {
-	
+
 	@Bean
 	public DataSource getDataSource() {
 		DriverManagerDataSource dataSource = new DriverManagerDataSource();
@@ -26,19 +26,19 @@ public class SpringMvcConfig implements WebMvcConfigurer {
 		dataSource.setUrl("jdbc:mysql://localhost:3306/crud_app");
 		dataSource.setUsername("minus");
 		dataSource.setPassword("AppForNauka$315920");
-		
+
 		return dataSource;
 	}
-	
+
 	@Bean
 	public ViewResolver getViewResolver() {
 		InternalResourceViewResolver resolver = new InternalResourceViewResolver();
 		resolver.setPrefix("/WEB-INF/views/");
 		resolver.setSuffix(".jsp");
-		
+
 		return resolver;
 	}
-	
+
 	@Bean
 	public ContactDAO getContactDAO() {
 		return new ContactDAOImpl(getDataSource());

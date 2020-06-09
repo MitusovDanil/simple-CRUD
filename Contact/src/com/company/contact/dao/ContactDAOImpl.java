@@ -14,9 +14,9 @@ import org.springframework.jdbc.core.ResultSetExtractor;
 import org.springframework.jdbc.core.RowMapper;
 
 public class ContactDAOImpl implements ContactDAO {
-	
+
 	private JdbcTemplate jdbcTemplate;
-	
+
 	public ContactDAOImpl(DataSource dataSource) {
 		this.jdbcTemplate = new JdbcTemplate(dataSource);
 	}
@@ -24,16 +24,16 @@ public class ContactDAOImpl implements ContactDAO {
 	@Override
 	public int save(Contact contact) {
 		String insertSql = "INSERT INTO crud_app.contact (name, email, address, phone) VALUES (?, ?, ?, ?)";
-		return jdbcTemplate.update(insertSql, contact.getName(), 
-				contact.getEmail(), contact.getAddress(), contact.getPhone());
-		
+		return jdbcTemplate.update(insertSql, contact.getName(), contact.getEmail(), contact.getAddress(),
+				contact.getPhone());
+
 	}
 
 	@Override
 	public int update(Contact contact) {
 		String updateSql = "UPDATE crud_app.contact SET name=?, email=?, address=?, phone=? WHERE contact_id=?";
-		return jdbcTemplate.update(updateSql, contact.getName(), 
-				contact.getEmail(), contact.getAddress(), contact.getPhone(), contact.getId());
+		return jdbcTemplate.update(updateSql, contact.getName(), contact.getEmail(), contact.getAddress(),
+				contact.getPhone(), contact.getId());
 	}
 
 	@Override
@@ -48,12 +48,12 @@ public class ContactDAOImpl implements ContactDAO {
 					String email = rs.getString("email");
 					String address = rs.getString("address");
 					String phone = rs.getString("phone");
-					
+
 					return new Contact(id, name, email, address, phone);
 				}
 				return null;
 			}
-			
+
 		};
 		return jdbcTemplate.query(getSql, extractor);
 	}
@@ -67,7 +67,7 @@ public class ContactDAOImpl implements ContactDAO {
 	@Override
 	public List<Contact> getAllContacts() {
 		String getAll = "SELECT * FROM crud_app.contact";
-		
+
 		RowMapper<Contact> rowMapper = new RowMapper<Contact>() {
 			@Override
 			public Contact mapRow(ResultSet rs, int rowNum) throws SQLException {
@@ -76,10 +76,10 @@ public class ContactDAOImpl implements ContactDAO {
 				String email = rs.getString("email");
 				String address = rs.getString("address");
 				String phone = rs.getString("phone");
-				
+
 				return new Contact(id, name, email, address, phone);
 			}
-			
+
 		};
 		return jdbcTemplate.query(getAll, rowMapper);
 	}
